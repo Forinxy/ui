@@ -12,8 +12,8 @@ android {
         applicationId = "com.monkeycode.liquidui"
         minSdk = 26
         targetSdk = 35
-        versionCode = 15
-        versionName = "2.6.1"
+        versionCode = 16
+        versionName = "2.7.0"
     }
 
     signingConfigs {
