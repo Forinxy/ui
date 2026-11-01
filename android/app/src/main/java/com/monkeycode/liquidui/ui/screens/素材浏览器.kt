@@ -2,6 +2,8 @@ package com.monkeycode.liquidui.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +47,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monkeycode.liquidui.ui.components.GlassCard
+import com.monkeycode.liquidui.ui.features.adminquery.AdminQueryNorms
+import com.monkeycode.liquidui.ui.features.ui2.Ui2ExtraFeatures
+import com.monkeycode.liquidui.ui.features.ui2.Ui2Features
 import com.monkeycode.liquidui.ui.components.InfoBanner
 import com.monkeycode.liquidui.ui.components.SectionTitle
 import com.monkeycode.liquidui.ui.components.Tag
@@ -61,14 +66,22 @@ import com.monkeycode.liquidui.ui.theme.AppShape
 fun 素材浏览器(onOpenFeature: (FeatureTarget) -> Unit) {
     // 状态一律提到详情分支之前、并可跨组合保存：点卡片查看（UI2 详情或跳转功能页）后
     // 返回时，列表滚动位置（条目+像素偏移）、搜索词、分类筛选都停在原处，不回到顶部。
-    var section by rememberSaveable { mutableStateOf(0) } // 0=模板素材 1=UI2体验馆
-    var ui2Selected by remember { mutableStateOf<com.monkeycode.liquidui.ui.features.ui2.Ui2Feature?>(null) }
+    var section by rememberSaveable { mutableStateOf(0) } // 0=模板素材 1=UI2体验馆 2=数据查询规范
+    // 详情选中态存 id 而非对象：可跨组合保存，返回列表后仍停在原处（见上方注释）
+    var ui2SelectedId by rememberSaveable { mutableStateOf<String?>(null) }
+    var adminSelectedId by rememberSaveable { mutableStateOf<String?>(null) }
     var query by rememberSaveable { mutableStateOf("") }
     var selectedCategoryName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedCategory = FeatureCategory.entries.firstOrNull { it.name == selectedCategoryName }
     val listState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
-    ui2Selected?.let { feature ->
-        Ui2DetailScreen(feature = feature, onBack = { ui2Selected = null })
+    val ui2Selected = ui2SelectedId?.let { id -> (Ui2Features + Ui2ExtraFeatures).firstOrNull { it.id == id } }
+    if (ui2Selected != null) {
+        Ui2DetailScreen(feature = ui2Selected, onBack = { ui2SelectedId = null })
+        return
+    }
+    val adminSelected = adminSelectedId?.let { id -> AdminQueryNorms.firstOrNull { it.id == id } }
+    if (adminSelected != null) {
+        AdminQueryDetailScreen(norm = adminSelected, onBack = { adminSelectedId = null })
         return
     }
 
@@ -113,16 +126,22 @@ fun 素材浏览器(onOpenFeature: (FeatureTarget) -> Unit) {
 
         item {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 22.dp),
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 22.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 分类芯片(label = "模板素材", selected = section == 0, onClick = { section = 0 })
                 分类芯片(label = "UI2 体验馆 · 77", selected = section == 1, onClick = { section = 1 })
+                分类芯片(label = "数据查询规范 · 5", selected = section == 2, onClick = { section = 2 })
             }
         }
 
         if (section == 1) {
-            item { Ui2CatalogSection(onOpen = { ui2Selected = it }) }
+            item { Ui2CatalogSection(onOpen = { ui2SelectedId = it.id }) }
+            item { Spacer(Modifier.height(24.dp)) }
+        }
+
+        if (section == 2) {
+            item { AdminQueryCatalogSection(onOpen = { adminSelectedId = it.id }) }
             item { Spacer(Modifier.height(24.dp)) }
         }
 

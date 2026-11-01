@@ -27,6 +27,9 @@ MIRRORS = [
     ("素材库/网络壁纸与离线缓存/代码/WallpaperStore.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/WallpaperStore.kt"),
     ("素材库/网络壁纸与离线缓存/代码/SystemWallpaper.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/SystemWallpaper.kt"),
     ("素材库/网络壁纸与离线缓存/代码/WallpaperSettings.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/screens/WallpaperSettings.kt"),
+    ("素材库/后台数据查询规范/代码/AdminQuerySpec.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/adminquery/AdminQuerySpec.kt"),
+    ("素材库/后台数据查询规范/代码/AdminQueryDemo.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/adminquery/AdminQueryDemo.kt"),
+    ("素材库/后台数据查询规范/代码/AdminQueryScreen.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/screens/AdminQueryScreen.kt"),
 ]
 for mirror, authoritative in MIRRORS:
     a, b = ROOT / mirror, ROOT / authoritative
