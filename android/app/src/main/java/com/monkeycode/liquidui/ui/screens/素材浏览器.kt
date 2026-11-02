@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monkeycode.liquidui.ui.components.GlassCard
 import com.monkeycode.liquidui.ui.features.adminquery.AdminQueryNorms
+import com.monkeycode.liquidui.ui.features.overlayterms.OverlayTerms
 import com.monkeycode.liquidui.ui.features.ui2.Ui2ExtraFeatures
 import com.monkeycode.liquidui.ui.features.ui2.Ui2Features
 import com.monkeycode.liquidui.ui.components.InfoBanner
@@ -66,10 +67,11 @@ import com.monkeycode.liquidui.ui.theme.AppShape
 fun 素材浏览器(onOpenFeature: (FeatureTarget) -> Unit) {
     // 状态一律提到详情分支之前、并可跨组合保存：点卡片查看（UI2 详情或跳转功能页）后
     // 返回时，列表滚动位置（条目+像素偏移）、搜索词、分类筛选都停在原处，不回到顶部。
-    var section by rememberSaveable { mutableStateOf(0) } // 0=模板素材 1=UI2体验馆 2=数据查询规范
+    var section by rememberSaveable { mutableStateOf(0) } // 0=模板素材 1=UI2体验馆 2=数据查询规范 3=弹窗提示术语
     // 详情选中态存 id 而非对象：可跨组合保存，返回列表后仍停在原处（见上方注释）
     var ui2SelectedId by rememberSaveable { mutableStateOf<String?>(null) }
     var adminSelectedId by rememberSaveable { mutableStateOf<String?>(null) }
+    var overlaySelectedId by rememberSaveable { mutableStateOf<String?>(null) }
     var query by rememberSaveable { mutableStateOf("") }
     var selectedCategoryName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedCategory = FeatureCategory.entries.firstOrNull { it.name == selectedCategoryName }
@@ -82,6 +84,11 @@ fun 素材浏览器(onOpenFeature: (FeatureTarget) -> Unit) {
     val adminSelected = adminSelectedId?.let { id -> AdminQueryNorms.firstOrNull { it.id == id } }
     if (adminSelected != null) {
         AdminQueryDetailScreen(norm = adminSelected, onBack = { adminSelectedId = null })
+        return
+    }
+    val overlaySelected = overlaySelectedId?.let { id -> OverlayTerms.firstOrNull { it.id == id } }
+    if (overlaySelected != null) {
+        OverlayTermsDetailScreen(term = overlaySelected, onBack = { overlaySelectedId = null })
         return
     }
 
@@ -132,6 +139,7 @@ fun 素材浏览器(onOpenFeature: (FeatureTarget) -> Unit) {
                 分类芯片(label = "模板素材", selected = section == 0, onClick = { section = 0 })
                 分类芯片(label = "UI2 体验馆 · 77", selected = section == 1, onClick = { section = 1 })
                 分类芯片(label = "数据查询规范 · 5", selected = section == 2, onClick = { section = 2 })
+                分类芯片(label = "弹窗提示术语 · 12", selected = section == 3, onClick = { section = 3 })
             }
         }
 
@@ -142,6 +150,11 @@ fun 素材浏览器(onOpenFeature: (FeatureTarget) -> Unit) {
 
         if (section == 2) {
             item { AdminQueryCatalogSection(onOpen = { adminSelectedId = it.id }) }
+            item { Spacer(Modifier.height(24.dp)) }
+        }
+
+        if (section == 3) {
+            item { OverlayTermsCatalogSection(onOpen = { overlaySelectedId = it.id }) }
             item { Spacer(Modifier.height(24.dp)) }
         }
 

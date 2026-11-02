@@ -86,6 +86,13 @@
 |---|---|---|
 | **KD一对A**《查数据查到崩溃？这套烂后台连改了四刀》 | https://www.bilibili.com/video/BV1Vuxr6BEDp/ | B 端后台查询的四条规范主题（筛选分层 / 时间口径 / 标签聚合 / 看板下钻）来自该视频页面公开的标题与课程总结文字；本仓库未观看视频画面，未复制其画面、音频、字幕或截图。条文、反例、提示词与全部 Compose 实现均为本仓库独立撰写，具体参数（保留期 90 天、聚合阈值 3、模拟耗时 450ms 等）为本仓库自设的样板值。详见 `素材库/后台数据查询规范/参考来源.md` |
 
+## 弹窗与提示术语（F17）
+
+| 来源 | 链接 | 说明 |
+|---|---|---|
+| **ZTough**《Vibe Coding 术语课：别再管所有弹窗都叫「弹窗」了｜前端：弹窗与提示 12 术语网页演示》 | https://www.bilibili.com/video/BV14Utf6QEnB/ | 12 个反馈术语的主题与其中 6 个术语名（Alert、Toast、Modal、Drawer、Popconfirm、Tooltip）来自该视频页面公开简介；另 6 条（Snackbar、Notification、Popover、BottomSheet/ActionSheet、Loading/Progress、Badge/Dot）为本仓库按同族标准补足，已在文档与 App 内标注区分。本仓库未观看视频画面，未复制其网页代码、画面、字幕或截图；定义、区别对照、反例、提示词与全部 Compose 演示均为独立撰写。详见 `素材库/弹窗与提示术语/参考来源.md` |
+| **SpicyTater-**《Vibe Coding丨别再只跟 AI 说"加个弹窗"了！》 | https://www.bilibili.com/video/BV1Q9nk6ZEdN/ | 同主题族的相关公开内容，仅作延伸参考，未作为 F17 的依据（该 UP 的《AI 开发的大概流程》已另行提炼，见上文「AI 协作开发流程规范」） |
+
 ## 其他资源
 
 - **Material 3 / Jetpack Compose**（Google）：https://developer.android.com/jetpack/compose

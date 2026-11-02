@@ -30,6 +30,9 @@ MIRRORS = [
     ("素材库/后台数据查询规范/代码/AdminQuerySpec.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/adminquery/AdminQuerySpec.kt"),
     ("素材库/后台数据查询规范/代码/AdminQueryDemo.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/adminquery/AdminQueryDemo.kt"),
     ("素材库/后台数据查询规范/代码/AdminQueryScreen.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/screens/AdminQueryScreen.kt"),
+    ("素材库/弹窗与提示术语/代码/OverlayTermsSpec.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/overlayterms/OverlayTermsSpec.kt"),
+    ("素材库/弹窗与提示术语/代码/OverlayTermsDemo.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/features/overlayterms/OverlayTermsDemo.kt"),
+    ("素材库/弹窗与提示术语/代码/OverlayTermsScreen.kt", "android/app/src/main/java/com/monkeycode/liquidui/ui/screens/OverlayTermsScreen.kt"),
 ]
 for mirror, authoritative in MIRRORS:
     a, b = ROOT / mirror, ROOT / authoritative
